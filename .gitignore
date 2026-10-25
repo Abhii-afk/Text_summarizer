@@ -1,0 +1,8 @@
+saved_summary_model/
+results/
+samsum-*
+.ipynb_checkpoints/
+__pycache__/
+venv/
+.env
+.pytest_cache/

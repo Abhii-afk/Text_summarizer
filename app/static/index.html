@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>T5 Summarizer</title>
+  </head>
+  <body>
+    <main>
+      <h1>Text Summarizer</h1>
+      <textarea id="text" rows="12" cols="80" placeholder="Paste a dialogue here..."></textarea>
+      <br>
+      <button id="summarize">Summarize</button>
+      <p id="error" role="alert"></p>
+      <h2>Summary</h2>
+      <output id="summary"></output>
+    </main>
+    <script>
+      const text = document.getElementById("text");
+      const button = document.getElementById("summarize");
+      const summary = document.getElementById("summary");
+      const error = document.getElementById("error");
+
+      button.addEventListener("click", async () => {
+        summary.textContent = "";
+        error.textContent = "";
+        try {
+          const response = await fetch("/summarize", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({text: text.value})
+          });
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.detail || "Unable to summarize text.");
+          }
+          summary.textContent = data.summary;
+        } catch (requestError) {
+          error.textContent = requestError.message;
+        }
+      });
+    </script>
+  </body>
+</html>
