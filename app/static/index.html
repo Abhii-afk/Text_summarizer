@@ -515,7 +515,7 @@ John: Thanks! See you then.`;
           length === 1 ? "" : "s"
         }`;
         clearButton.disabled = length === 0;
-        summarizeButton.disabled = loading || length === 0;
+        summarizeButton.disabled = loading || !text.value.trim();
       }
 
       function setLoading(value) {
